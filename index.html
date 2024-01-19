@@ -154,13 +154,34 @@
                 <h1>EcommBokum</h1>
             </div>
             <div class="nav">
-                <button class="navbtn"><h5>Cart</h5></button>
-                <button class="navbtn" onclick="show('store-page', 'cart-page')"><h5>Store</h5></button>
-            </div>
-            <div class="main-area">
-                <div id="checkout">
-                    <!-- ad space? -->
+              <nav class="navbar navbar-expand-lg navbar-light bg-white bg-body-tertiary py-3 fixed-top">
+                <div class="container-fluid">
+                 <img src="product/rsz_logo.png" alt="logo">
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span><i id="bar" class="fa-solid fa-bars"></i></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+
+                      <li class="nav-item">
+                        <a class="nav-link active" onclick="show('store-page', 'cart-page')">Shop</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Cart</a>
+                      </li>
+                      <li class="nav-item">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                      </li>
+                  </div>
                 </div>
+              </nav>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+            <div class="main-area">
                 <form action="submit.php" method="post">
                     <div id="cart-list">
                         <table width="100%">
@@ -179,7 +200,14 @@
                             </tbody>
                         </table>
                     </div>
-                    <input class="submit-btn" type="submit" value="Submit Order">
+                    <input class="sumbit-btn" type="submit" value="Submit Order"
+                    style="background: black;
+                           border: none;
+                           color: white;
+                           padding: 16px 32px;
+                           text-decoration: none;
+                           margin: 4px 2px;
+                           cursor: pointer;">
                 </form>
             </div>
         </div>
