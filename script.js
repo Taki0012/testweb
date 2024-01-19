@@ -34,7 +34,7 @@ function addItem(itemName, itemPrice) {
                 var imgsauce = "product/prod2.png";
                 break;
         }
-        cells[0].innerHTML = '<button type="button" class="remove-btn" onclick="removeRow(this)">Remove</button>';
+        cells[0].innerHTML = '<button type="button" class="remove-btn" onclick="removeRow(this)">X</button>';
         cells[1].innerHTML = '<img src="' + imgsauce + '" alt="Placeholder">';
         cells[2].innerHTML = '<input type="text" class="infofield" name="name[]" value="' + itemName + '" readonly>';
         cells[3].innerHTML = '<input type="number" class="infofield" name="price[]" value="' + itemPrice + '" min="0" step="0.01" readonly>';
