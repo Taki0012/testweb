@@ -1,158 +1,77 @@
-// reference the tbody
-let tbody = document.getElementById("shopcart");
-    
-// create  element variables
-let tableRow = document.createElement("tr");
-let cell1 = document.createElement("td");
-let cell2 = document.createElement("td");
-let cell3 = document.createElement("td");
-let cell4 = document.createElement("td");
-let cell5 = document.createElement("td");
-let cell6 = document.createElement("td");
+function addItem(itemName, itemPrice) {
+    var table = document.getElementById("cart-list").getElementsByTagName('tbody')[0];
 
-let link = document.createElement("a");
-let icon = document.createElement("i");
-let image = document.createElement("img");
-let heading = document.createElement("h5");
-let input = document.createElement("input");
-let priceHeading = document.createElement("h5");
-let deleteButton = document.createElement("button");
+    // Check if the item is already in the table
+    var existingRow = findRowByName(itemName);
+    if (existingRow) {
+        // If item exists, increase the quantity
+        var quantityInput = existingRow.querySelector('input[name="quantity[]"]');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    } else {
+        // If item does not exist, add a new row
+        var newRow = table.insertRow(table.rows.length);
+        var cells = [];
+        for (var i = 0; i < 6; i++) {
+            cells.push(newRow.insertCell(i));
+        }
 
-let itemname = "";
-let itemdis = "";
-let itemprice = 0;
-
-// image sources
-let imghoodie1 = "Picture/hoodies/hoodies 1.webp";
-let itemval = 1;
-
-
-// adding item to cart function
-function itemtocart(itemval) {
-
-    switch (item) {
-        case 1:
-            itemdis = "SUNDRIED HOODIE<br>-VIOLET";
-            itemname = "";
-            itemprice = 2999.00;
-            break;
-        case 2:
-            itemdis = "SUNDRIED HOODIE<br>-VIOLET";
-            itemname = "";
-            itemprice = 2999.00;
-            break;
-        case 3:
-            itemdis = "SUNDRIED HOODIE<br>-VIOLET";
-            itemname = "";
-            itemprice = 2999.00;
-            break;
-        case 4:
-            itemdis = "SUNDRIED HOODIE<br>-VIOLET";
-            itemname = "";
-            itemprice = 2999.00;
-            break;
-        case 5:
-            itemdis = "SUNDRIED HOODIE<br>-VIOLET";
-            itemname = "";
-            itemprice = 2999.00;
-            break;
-        case 6:
-            itemdis = "SUNDRIED HOODIE<br>-VIOLET";
-            itemname = "";
-            itemprice = 2999.00;
-            break;
+        cells[0].innerHTML = '<button type="button" class="remove-btn" onclick="removeRow(this)">Remove</button>';
+        cells[1].innerHTML = '<img src="placeholder.jpg" alt="Placeholder">';
+        cells[2].innerHTML = '<input type="text" class="infofield" name="name[]" value="' + itemName + '" readonly>';
+        cells[3].innerHTML = '<input type="number" class="infofield" name="price[]" value="' + itemPrice + '" min="0" step="0.01" readonly>';
+        cells[4].innerHTML = '<input type="number" name="quantity[]" value="1" min="1" max="50">';
+        cells[4].addEventListener("input", function() {
+            updateTotals();
+        });
+        cells[5].innerHTML = '<input type="text" class="infofield" name="total[]" readonly>';
+        
     }
 
-    // create the first cell with a delete button
-    deleteButton.textContent = "Delete";
-    deleteButton.className = "delete-button";
-
-    // Add an event listener to the delete button to remove the table row
-    deleteButton.addEventListener("click", function() {
-    // Get the reference to the parent row and remove it
-    let rowToRemove = deleteButton.closest("tr");
-    rowToRemove.remove();
-    });
-
-    cell1.appendChild(deleteButton);
-    tableRow.appendChild(cell1);
-
-    // create the second cell with an image
-    image.src = imghoodie1; //sets image
-    cell2.appendChild(image);
-    tableRow.appendChild(cell2);
-
-    // create the third cell with a heading
-    heading.innerHTML = itemdis; //sets text
-    cell3.appendChild(heading);
-    tableRow.appendChild(cell3);
-
-    // create the fourth cell with a price
-    cell4.innerHTML = "₱" +  itemprice; //sets price
-    tableRow.appendChild(cell4);
-
-    // create the fifth cell with a number input
-    input.className = "quantity";
-    input.value = "1";
-    input.min = "1";  // set the minimum value
-    input.max = "50"; // set the maximum value
-    input.type = "number";
-    cell5.appendChild(input);
-    tableRow.appendChild(cell5);
-
-    // add an event listener to update the total when the input changes
-    input.addEventListener("input", function() {
-        updateTotal();
-    });
-  
-    cell5.appendChild(input);
-    tableRow.appendChild(cell5);
-  
-    // create the sixth cell with a price
-    priceHeading.innerHTML = "₱" + itemprice;
-    cell6.appendChild(priceHeading);
-    tableRow.appendChild(cell6);
-
-    // append the table row to the tbody
-    tbody.appendChild(tableRow);
+    // Update totals for all rows
+    updateTotals();
 }
 
-// function to update the total based on the quantity input
-function updateTotal() {
-    let quantity = parseInt(input.value); // convert the input value to an integer
-    let unitPrice = 2999.00; // replace with the actual unit price
+function findRowByName(itemName) {
+    var table = document.getElementById("cart-list").getElementsByTagName('tbody')[0];
+    var rows = table.getElementsByTagName('tr');
 
-    // calculate the total and update the content of cell 6
-    let total = quantity * unitPrice;
-    priceHeading.innerHTML = "₱" + total.toFixed(2); // display the total with 2 decimal places
+    for (var i = 0; i < rows.length; i++) {
+        var nameInput = rows[i].querySelector('input[name="name[]"]');
+        if (nameInput && nameInput.value === itemName) {
+            return rows[i];
+        }
+    }
+
+    return null;
 }
 
-// Sample data
-var item = {
-    name: "itemA",
-    price: 1234,
-    quantity: 2
-};
-/*
-// Convert the JavaScript object to JSON
-//var jsonData = JSON.stringify(item);
+function removeRow(btn) {
+    var row = btn.parentNode.parentNode;
+    row.parentNode.removeChild(row);
 
-// Send a POST request to a PHP script
-fetch('ecomweb.php', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: item,
-})
-.then(response => response.json())
-.then(data => {
-    console.log('Success:', data);
-})
-.catch((error) => {
-    console.error('Error:', error);
-});
-*/
+    // Update totals for all rows after removal
+    updateTotals();
+}
+
+function updateTotals() {
+    var table = document.getElementById("cart-list").getElementsByTagName('tbody')[0];
+    var rows = table.getElementsByTagName('tr');
+
+    for (var i = 0; i < rows.length; i++) {
+        var quantityInput = rows[i].querySelector('input[name="quantity[]"]');
+        var priceInput = rows[i].querySelector('input[name="price[]"]');
+        var totalInput = rows[i].querySelector('input[name="total[]"]');
+
+        if (quantityInput && priceInput && totalInput) {
+            var quantity = parseInt(quantityInput.value);
+            var price = parseFloat(priceInput.value);
+            var total = quantity * price;
+
+            totalInput.value = total.toFixed(2);
+        }
+    }
+}
+
 // show hide function to combine the pages together in one html
 function show(shown, hidden) {
     document.getElementById(shown).style.display = "block";
