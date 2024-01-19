@@ -14,9 +14,28 @@ function addItem(itemName, itemPrice) {
         for (var i = 0; i < 6; i++) {
             cells.push(newRow.insertCell(i));
         }
-
+        switch (itemName) {
+            case 'BE FREE - T-SHIRTS':
+                var imgsauce = "product/prod1.png";
+                break;
+            case 'BE FREE - WALLET':
+                var imgsauce = "product/prod5.png";
+                break;
+            case 'BE FREE - SWEATER':
+                var imgsauce = "product/prod3.png";
+                break;
+            case 'BE FREE - MUG':
+                var imgsauce = "product/prod4.png";
+                break;
+            case 'BE FREE - HOODIE':
+                var imgsauce = "product/prod6.png";
+                break;
+            case 'BE FREE - PHONE CASE':
+                var imgsauce = "product/prod2.png";
+                break;
+        }
         cells[0].innerHTML = '<button type="button" class="remove-btn" onclick="removeRow(this)">Remove</button>';
-        cells[1].innerHTML = '<img src="placeholder.jpg" alt="Placeholder">';
+        cells[1].innerHTML = '<img src="' + imgsauce + '" alt="Placeholder">';
         cells[2].innerHTML = '<input type="text" class="infofield" name="name[]" value="' + itemName + '" readonly>';
         cells[3].innerHTML = '<input type="number" class="infofield" name="price[]" value="' + itemPrice + '" min="0" step="0.01" readonly>';
         cells[4].innerHTML = '<input type="number" name="quantity[]" value="1" min="1" max="50">';
